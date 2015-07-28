@@ -1,0 +1,56 @@
+logging:
+    path: logs/
+    level:  
+        uk.co.landbit: DEBUG
+        org.springframework: INFO
+
+---
+
+spring:
+    profiles: scratch
+    datasource:
+        driver-class-name: org.hsqldb.jdbc.JDBCDriver
+        url: jdbc:hsqldb:mem:scratchdb
+    jpa:
+        show-sql: false
+        generate-ddl: true
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate.dialect: 
+            hibernate.hbm2ddl.import_files: import.sql
+
+---
+
+spring:
+    profiles: common
+    # Override in config folder
+    social:
+        twitter:
+            app-id: myappid
+            app-secret: myappsecret
+    datasource:
+        driver-class-name: 
+        data-source-class-name: 
+        username: 
+        password: 
+        test-on-borrow: true
+        test-while-idle: true
+        validation-query: select 1;
+        # add some custom hikari pool related properties
+        custom-hikari-minimun-idle: 8
+        custom-hikari-max-pool-size: 32
+        custom-hikari-connection-timeout: 30000
+    jpa:
+        show-sql: false
+        generate-ddl: false
+        hibernate:
+            ddl-auto: validate
+        properties:
+            hibernate.dialect: 
+            hibernate.hbm2ddl.import_files: 
+#            hibernate.connection.provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+#            hibernate.hikari.minimumIdle: 20
+#            hibernate.hikari.maximumPoolSize: 100
+#            hibernate.hikari.idleTimeout: 30000
+#            hibernate.hikari.dataSourceClassName: net.sourceforge.jtds.jdbc.Driver
