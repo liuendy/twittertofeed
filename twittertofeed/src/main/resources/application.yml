@@ -7,10 +7,15 @@ logging:
 ---
 
 spring:
+    
     profiles: scratch
     datasource:
         driver-class-name: org.hsqldb.jdbc.JDBCDriver
         url: jdbc:hsqldb:mem:scratchdb
+        # add some custom hikari pool related properties
+        custom-hikari-minimun-idle: 8
+        custom-hikari-max-pool-size: 32
+        custom-hikari-connection-timeout: 30000
     jpa:
         show-sql: false
         generate-ddl: true
@@ -18,7 +23,8 @@ spring:
             ddl-auto: create-drop
         properties:
             hibernate.dialect: 
-            hibernate.hbm2ddl.import_files: import.sql
+            hibernate.hbm2ddl.import_files:
+            #hibernate.hbm2ddl.import_files: import.sql
 
 ---
 
