@@ -31,15 +31,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      *             Thrown if no user is found with the given username.
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	LOGGER.debug("Loading user by username: {}", username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	LOGGER.debug("Loading user by username: {}", email);
 
-	User user = repository.findByEmail(username);
+	User user = repository.findByEmail(email).orElseThrow(()
+					-> new UsernameNotFoundException(String.format("User with email=%s was not found", email)));;
+	
 	LOGGER.debug("Found user: {}", user);
-
-	if (user == null) {
-	    throw new UsernameNotFoundException("No user found with username: " + username);
-	}
 
 	// TODO
 	TwitterToFeedUserDetails principal = null;
