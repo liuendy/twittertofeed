@@ -9,13 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 
-public class TwitterToFeedSocialUserDetailsService implements SocialUserDetailsService {
+public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TwitterToFeedSocialUserDetailsService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocialUserDetailsServiceImpl.class);
 
     private UserDetailsService userDetailsService;
 
-    public TwitterToFeedSocialUserDetailsService(UserDetailsService userDetailsService) {
+    public SocialUserDetailsServiceImpl(UserDetailsService userDetailsService) {
 	this.userDetailsService = userDetailsService;
     }
 

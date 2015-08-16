@@ -40,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	LOGGER.debug("Found user: {}", user);
 
 	// TODO
-	TwitterToFeedUserDetails principal = null;
+	SocialUserDetails principal = null;
 	// = TwitterToFeedUserDetails.getBuilder()
 	// .firstName(user.getFirstName())
 	// .id(user.getId())

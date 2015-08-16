@@ -10,7 +10,7 @@ import uk.co.landbit.twittertofeed.user.domain.Role;
 import uk.co.landbit.twittertofeed.user.domain.SignInProvider;
 
 //TODO 
-public class TwitterToFeedUserDetails extends SocialUser {
+public class SocialUserDetails extends SocialUser {
 
     private Long id;
 
@@ -22,7 +22,7 @@ public class TwitterToFeedUserDetails extends SocialUser {
 
     private SignInProvider signInProvider;
 
-    public TwitterToFeedUserDetails(String username, String password,
+    public SocialUserDetails(String username, String password,
 	    Collection<? extends GrantedAuthority> authorities) {
 	super(username, password, authorities);
 	// TODO Auto-generated constructor stub
