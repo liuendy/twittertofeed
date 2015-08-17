@@ -1,6 +1,7 @@
 package uk.co.landbit.twittertofeed.security;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.connect.web.SignInAdapter;
@@ -11,6 +12,14 @@ import uk.co.landbit.twittertofeed.user.domain.SignInProvider;
 
 //TODO 
 public class SocialUserDetails extends SocialUser {
+    
+//    private String password;
+//    private final String username;
+//    private final Set<GrantedAuthority> authorities;
+//    private final boolean accountNonExpired;
+//    private final boolean accountNonLocked;
+//    private final boolean credentialsNonExpired;
+//    private final boolean enabled;
 
     private Long id;
 

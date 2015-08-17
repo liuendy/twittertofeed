@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import uk.co.landbit.twittertofeed.controller.SignupForm;
+import uk.co.landbit.twittertofeed.user.controller.SignupForm;
 import uk.co.landbit.twittertofeed.user.domain.User;
 import uk.co.landbit.twittertofeed.user.repository.UserRepository;
 

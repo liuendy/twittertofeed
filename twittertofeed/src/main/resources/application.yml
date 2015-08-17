@@ -17,7 +17,7 @@ spring:
         custom-hikari-max-pool-size: 32
         custom-hikari-connection-timeout: 30000
     jpa:
-        show-sql: false
+        show-sql: true
         generate-ddl: true
         hibernate:
             ddl-auto: create-drop
@@ -29,7 +29,7 @@ spring:
 ---
 
 spring:
-    profiles: common
+    profiles: live
     # Override in config folder
     social:
         twitter:

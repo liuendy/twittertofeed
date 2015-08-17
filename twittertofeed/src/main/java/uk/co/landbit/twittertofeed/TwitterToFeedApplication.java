@@ -18,9 +18,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.social.config.annotation.EnableSocial;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.xnio.Options;
 
@@ -29,7 +30,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
 
-
+@EnableJpaRepositories
+@EnableTransactionManagement
 @SpringBootApplication
 //@SpringBootApplication
 @Configuration
