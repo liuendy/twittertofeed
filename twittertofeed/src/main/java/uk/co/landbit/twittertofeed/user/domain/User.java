@@ -93,4 +93,16 @@ public class User {
         this.lastName = lastName;
     }
 
+    public User(String email, String password, String firstName, String lastName) {
+	super();
+	this.email = email;
+	this.password = password;
+	this.firstName = firstName;
+	this.lastName = lastName;
+    }
+
+    public User() {
+	// TODO Auto-generated constructor stub
+    }
+
 }

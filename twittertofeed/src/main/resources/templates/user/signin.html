@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:social="http://spring.io/springsocial"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorator="layout">
-	<head>
-		<title>Spring Social Showcase</title>
-		<link rel="stylesheet" th:href="@{/resources/page.css}" type="text/css" media="screen"></link>
-		<link rel="stylesheet" th:href="@{/resources/form.css}" type="text/css" media="screen"></link>
-		<link rel="stylesheet" th:href="@{/resources/messages/messages.css}" type="text/css" media="screen"></link>
-	</head>
+<html>
+
+<head>
+	<title>TwitterToFeed sign in page</title>
+	<link
+		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+		rel="stylesheet" media="screen" />
+	<link
+		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js"
+		th:href="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"
+		rel="stylesheet" media="screen" />
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+		th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+	
+</head>
 	<body>
 		<div id="header">
-			<h1><a th:href="@{/}">Spring Social Showcase</a></h1>
+			<h1><a th:href="@{/}">TwitterToFeed sign in page</a></h1>
 		</div>
 		
 		<div id="leftNav">
@@ -31,42 +37,44 @@
 			  			Try again with a different provider or with your username and password.
 			  		</div>
 				</div>
-				<fieldset>
-					<label for="login">Username</label>
-					<input id="login" name="username" type="text" size="25"></input>
-					<label for="password">Password</label>
-					<input id="password" name="password" type="password" size="25"></input>
-				</fieldset>
-				<button type="submit">Sign In</button>
 				
-				<p>Some test user/password pairs you may use are:</p>
-				<ul>
-					<li>habuma/freebirds</li>
-					<li>kdonald/melbourne</li>
-					<li>rclarkson/atlanta</li>
-				</ul>
 				
-				<p>Or you can <a th:href="@{/signup}">signup</a> with a new account.</p>
-			</form>
+				
+				    <div class="row">
+                    <div id="form-group-email" class="form-group col-lg-4">
+					  <label class="control-label" for="user-email" th:text="#{label.user.email}+':'">Email:</label>
+                        <input id="user-email" name="username" type="text" class="form-control"/>
+                    </div>
+                </div>
+                
+                
+                 <div class="row">
+                    <div id="form-group-password" class="form-group col-lg-4">
+                        <label class="control-label" for="user-password" th:text="#{label.user.password}+':'">Password:</label>
+                        <input id="user-password" name="password" type="password" class="form-control"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <button type="submit" class="btn btn-default" th:text="#{label.user.login.submit.button}+':'">Sign in</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    <a href="/signup" th:href="@{/signup}"  th:text="#{label.navigation.registration.link}">Create user account</a>
+                </div>
+            </div>
+				
 
 			<!-- TWITTER SIGNIN -->
-			<form id="tw_signin" th:action="@{/signin/twitter}" method="POST">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
-				<button type="submit"><img th:src="@{/resources/social/twitter/sign-in-with-twitter-d.png}"></img></button>
-			</form>
+			<div class="row">
+			 <div class="form-group col-lg-4">
+				<p><a th:href="@{/auth/twitter}"><img th:src="@{/resources/social/twitter/sign-in-with-twitter-d.png}"/>Sign in with your twitter account</a></p>
+		</div>
 		
-			<!-- FACEBOOK SIGNIN -->
-			<form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="POST">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
-				<input type="hidden" name="scope" value="publish_stream,user_photos,offline_access"></input>
-				<button type="submit"><img th:src="@{/resources/social/facebook/sign-in-with-facebook.png}"></img></button>
-			</form>
-		
-			<!-- LINKEDIN SIGNIN -->
-			<form name="li_signin" id="li_signin" th:action="@{/signin/linkedin}" method="POST">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
-				<button type="submit">Sign In with LinkedIn</button>
-			</form>
-		</div>		
+      		</div>
+   
+        </div>
 	</body>
 </html>

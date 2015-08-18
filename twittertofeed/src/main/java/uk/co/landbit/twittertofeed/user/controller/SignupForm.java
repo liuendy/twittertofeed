@@ -5,16 +5,14 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import uk.co.landbit.twittertofeed.user.domain.Role;
+import uk.co.landbit.twittertofeed.user.domain.SignInProvider;
 
 public class SignupForm {
 
-    @NotEmpty
-    private String username;
-
-    @NotEmpty
+    // @NotEmpty
     private String firstName;
 
-    @NotEmpty
+    // @NotEmpty
     private String lastName;
 
     @NotEmpty
@@ -24,8 +22,10 @@ public class SignupForm {
     @NotEmpty
     private String password = "";
 
-    @NotNull
+    //@NotNull
     private Role role = Role.ROLE_USER;
+
+    private SignInProvider signInProvider;
 
     public String getEmail() {
 	return email;
@@ -47,32 +47,32 @@ public class SignupForm {
 	return role;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getFirstName() {
-        return firstName;
+	return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+	this.firstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+	return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+	this.lastName = lastName;
     }
 
     public void setRole(Role role) {
 	this.role = role;
+    }
+
+    public SignInProvider getSignInProvider() {
+	return signInProvider;
+    }
+
+    public void setSignInProvider(SignInProvider signInProvider) {
+	this.signInProvider = signInProvider;
     }
 
 }

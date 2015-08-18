@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// TODO tidy
 		// Spring Security ignores request to static resources.
 		.ignoring()
+			.antMatchers("/webjars/**")
 			.antMatchers("/static/**")
 			.antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg");
     }

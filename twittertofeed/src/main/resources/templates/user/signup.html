@@ -1,31 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:social="http://spring.io/springsocial"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorator="layout">
-	<head>
-		<title>Spring Social Showcase</title>
-		<link rel="stylesheet" th:href="@{/page.css}" type="text/css" media="screen"></link>
-		<link rel="stylesheet" th:href="@{/form.css}" type="text/css" media="screen"></link>
-		<link rel="stylesheet" th:href="@{/messages/messages.css}" type="text/css" media="screen"></link>
-	</head>
-	<body>
-		<div id="header">
-			<h1><a th:href="@{/}">Spring Social Showcase</a></h1>
-		</div>
-		
-		<div id="leftNav">
-			Left nav menu
-		</div>
-		
-		<div id="content" layout:fragment="content">
-			<h3>Sign Up</h3>
-			
-			<div th:if="${!#strings.isEmpty(message)}"
-				 th:class="${message.type.cssClass}" 
-				 th:text="${message.text}">error message text</div>
-			
-			<form id="signup" th:action="@{/user/signup}" method="post" th:object="${signupForm}">
+<html>
+
+<head>
+	<title>TwitterToFeed sign up page</title>
+	<link
+		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+		rel="stylesheet" media="screen" />
+	<link
+		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js"
+		th:href="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"
+		rel="stylesheet" media="screen" />
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+		th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+	
+</head>
+
+<body>
+
+
+<form id="signup" th:action="@{/user/signup}" method="post" th:object="${signupForm}">
 				<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 				<div class="formInfo">
 					<div class="error" th:if="${#fields.hasErrors('*')}">Unable to sign up. Please fix the errors below and resubmit.</div>
@@ -36,14 +30,116 @@
 					<input type="text" th:field="*{firstName}" />
 					<label for="lastName">Last Name <span th:if="${#fields.hasErrors('lastName')}" class="error" th:text="${#fields.errors('lastName')[0]}">Error</span></label>
 					<input type="text" th:field="*{lastName}" />
-					<label for="username">Username <span th:if="${#fields.hasErrors('username')}" class="error" th:text="${#fields.errors('username')[0]}">Error</span></label>
-					<input type="text" th:field="*{username}" />
+					<label for="email">email <span th:if="${#fields.hasErrors('email')}" class="error" th:text="${#fields.errors('email')[0]}">Error</span></label>
+					<input type="text" th:field="*{email}" />
 					<label for="password">Password (at least 6 characters) <span th:if="${#fields.hasErrors('password')}" class="error" th:text="${#fields.errors('password')[0]}">Error</span></label>
 					<input type="password" th:field="*{password}" />
 				</fieldset>
 				<p><button type="submit">Sign Up</button></p>
 			</form>
-		</div>
-	</body>
+
+
+<!-- <form class="form-narrow form-horizontal" method="post" th:action="@{/user/signup}" th:object="${signupForm}" th:fragment="signupForm"> -->
+<!--     /* Show general error task when form contains errors */ -->
+<!--     <th:block th:if="${#fields.hasErrors('${signupForm.*}')}"> -->
+<!--         <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div> -->
+<!--     </th:block> -->
+<!--     <fieldset> -->
+<!--         <legend>Please Sign Up</legend> -->
+<!--         <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'"> -->
+<!--             <label for="email" class="col-lg-2 control-label">Email</label> -->
+<!--             <div class="col-lg-10"> -->
+<!--                 <input type="text" class="form-control" id="email" placeholder="Email address" th:field="*{email}" /> -->
+<!--                 <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'"> -->
+<!--             <label for="password" class="col-lg-2 control-label">Password</label> -->
+<!--             <div class="col-lg-10"> -->
+<!--                 <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/> -->
+<!--                 <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="form-group"> -->
+<!--             <div class="col-lg-offset-2 col-lg-10"> -->
+<!--                 <button type="submit" class="btn btn-default">Sign up</button> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="form-group"> -->
+<!--             <div class="col-lg-offset-2 col-lg-10"> -->
+<!--                 <p>Already have an account? <a href="signin" th:href="@{/signin}">Sign In</a></p> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </fieldset> -->
+<!-- </form> -->
+
+</body>
 </html>
+
+<!-- <!DOCTYPE html> -->
+<!-- <html xmlns:th="http://www.thymeleaf.org" -->
+<!-- 	xmlns:social="http://spring.io/springsocial" -->
+<!-- 	> -->
+<!-- <head> -->
+<!-- <title>TwitterToFeed sign up page</title> -->
+<!-- <link -->
+<!-- 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css" -->
+<!-- 	th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" -->
+<!-- 	rel="stylesheet" media="screen" /> -->
+<!-- <link -->
+<!-- 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js" -->
+<!-- 	th:href="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}" -->
+<!-- 	rel="stylesheet" media="screen" /> -->
+<!-- <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js" -->
+<!-- 	th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script> -->
+<!-- <link rel="stylesheet" th:href="@{/messages/messages.css}" -->
+<!-- 	type="text/css" media="screen"></link> -->
+<!-- </head> -->
+<!-- <body> -->
+<!-- 	<div id="header"> -->
+<!-- 		<h1> -->
+<!-- 			<a th:href="@{/}">Welcome on Twitter to Feed sign up page</a> -->
+<!-- 		</h1> -->
+<!-- 	</div> -->
+
+<!-- 	<div id="leftNav">Left nav menu</div> -->
+
+<!-- 	<div id="content" layout:fragment="content"> -->
+<!-- 		<h3>Sign Up</h3> -->
+
+<!-- 		<div th:if="${!#strings.isEmpty(message)}" -->
+<!-- 			th:class="${message.type.cssClass}" th:text="${message.text}">error -->
+<!-- 			message text</div> -->
+
+<!-- 		<form id="signup" th:action="@{/user/signup}" method="post" -->
+<!-- 			th:object="${signupForm}"> -->
+<!-- 			<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
+<!-- 			<div class="formInfo"> -->
+<!-- 				<div class="error" th:if="${#fields.hasErrors('*')}">Unable to -->
+<!-- 					sign up. Please fix the errors below and resubmit.</div> -->
+<!-- 			</div> -->
+
+<!-- 			<fieldset> -->
+<!-- 				<label for="firstName">First Name <span -->
+<!-- 					th:if="${#fields.hasErrors('firstName')}" class="error" -->
+<!-- 					th:text="${#fields.errors('firstName')[0]}">Error</span></label> <input -->
+<!-- 					type="text" th:field="*{firstName}" /> <label for="lastName">Last -->
+<!-- 					Name <span th:if="${#fields.hasErrors('lastName')}" class="error" -->
+<!-- 					th:text="${#fields.errors('lastName')[0]}">Error</span> -->
+<!-- 				</label> <input type="text" th:field="*{lastName}" /> <label for="username">Username -->
+<!-- 					<span th:if="${#fields.hasErrors('username')}" class="error" -->
+<!-- 					th:text="${#fields.errors('username')[0]}">Error</span> -->
+<!-- 				</label> <input type="text" th:field="*{username}" /> <label for="password">Password -->
+<!-- 					(at least 6 characters) <span -->
+<!-- 					th:if="${#fields.hasErrors('password')}" class="error" -->
+<!-- 					th:text="${#fields.errors('password')[0]}">Error</span> -->
+<!-- 				</label> <input type="password" th:field="*{password}" /> -->
+<!-- 			</fieldset> -->
+<!-- 			<p> -->
+<!-- 				<button type="submit">Sign Up</button> -->
+<!-- 			</p> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
+<!-- </body> -->
+<!-- </html> -->
 
