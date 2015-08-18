@@ -32,6 +32,7 @@ public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
 	LOGGER.debug("Loading user by user id: {}", userId);
 
 	UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
+	
 	LOGGER.debug("Found user details: {} for userId {}", userDetails, userId);
 
 	return (SocialUserDetails) userDetails;

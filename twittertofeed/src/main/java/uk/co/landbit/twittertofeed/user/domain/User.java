@@ -23,6 +23,12 @@ public class User {
     @Column(name = "password", length = 255)
     private String password;
 
+    @Column(name = "first_name", length = 100, nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", length = 100, nullable = false)
+    private String lastName;
+
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -69,6 +75,22 @@ public class User {
 
     public void setSignInProvider(SignInProvider signInProvider) {
 	this.signInProvider = signInProvider;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
 }

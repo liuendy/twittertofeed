@@ -31,17 +31,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	LOGGER.debug("Found user: {}", user);
 
-	// TODO
-	SocialUserDetails principal = null;
-	// = TwitterToFeedUserDetails.getBuilder()
-	// .firstName(user.getFirstName())
-	// .id(user.getId())
-	// .lastName(user.getLastName())
-	// .password(user.getPassword())
-	// .role(user.getRole())
-	// .socialSignInProvider(user.getSignInProvider())
-	// .username(user.getEmail())
-	// .build();
+	SocialUserDetails principal = 
+		SocialUserDetails.getBuilder()
+                      	 .firstName(user.getFirstName())
+                      	 .id(user.getId())
+                       	 .lastName(user.getLastName())
+                       	 .password(user.getPassword())
+                       	 .role(user.getRole())
+                       	 .socialSignInProvider(user.getSignInProvider())
+                       	 .username(user.getEmail())
+                       	 .build();
 
 	LOGGER.debug("Returning user details: {}", principal);
 
