@@ -21,20 +21,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	this.repository = repository;
     }
 
-    /**
-     * Loads the user information.
-     * 
-     * @param username
-     *            The username of the requested user.
-     * @return The information of the user.
-     * @throws UsernameNotFoundException
-     *             Thrown if no user is found with the given username.
-     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 	LOGGER.debug("Loading user by username: {}", email);
 
-	User user = repository.findByEmail(email).orElseThrow(()
+	User user = repository.findByEmail(email)
+					.orElseThrow(()
 					-> new UsernameNotFoundException(String.format("User with email=%s was not found", email)));;
 	
 	LOGGER.debug("Found user: {}", user);
