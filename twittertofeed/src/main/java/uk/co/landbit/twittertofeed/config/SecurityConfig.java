@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				// Anyone can access the urls
 				//.antMatchers("/auth/**", "/login", "/signup/**", "/user/register/**").permitAll()
+				.antMatchers("/test/**").permitAll()
 				.antMatchers("/admin/**", "/favicon.ico", "/resources/**", "/auth/**", "/signin/**", "/signup/**", "/disconnect/facebook", "/user/signup/**").permitAll()
 				// The rest of the our application is protected.
 				//.antMatchers("/**").hasRole("USER")
