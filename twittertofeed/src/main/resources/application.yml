@@ -12,6 +12,7 @@ spring:
     datasource:
         driver-class-name: org.hsqldb.jdbc.JDBCDriver
         url: jdbc:hsqldb:mem:scratchdb
+        validation-query: select 1;
         # add some custom hikari pool related properties
         custom-hikari-minimun-idle: 8
         custom-hikari-max-pool-size: 32
@@ -36,10 +37,10 @@ spring:
             app-id: myappid
             app-secret: myappsecret
     datasource:
-        driver-class-name: 
-        data-source-class-name: 
-        username: 
-        password: 
+        driver-class-name: org.mariadb.jdbc.MySQLDataSource
+        url: jdbc:mysql://localhost:3306/twittertofeed
+        username: twittertofeed
+        password: averycomplicatedpassword
         test-on-borrow: true
         test-while-idle: true
         validation-query: select 1;
