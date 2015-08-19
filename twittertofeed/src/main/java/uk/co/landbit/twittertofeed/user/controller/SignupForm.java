@@ -19,7 +19,7 @@ public class SignupForm {
     private String email = "";
 
     // @Size(min = 6, message = "must be at least 6 characters")
-    @NotEmpty
+    //@NotEmpty
     private String password = "";
 
     //@NotNull
@@ -27,6 +27,10 @@ public class SignupForm {
 
     private SignInProvider signInProvider;
 
+    public boolean isSocialSignIn() {
+        return signInProvider != null;
+    }
+    
     public String getEmail() {
 	return email;
     }

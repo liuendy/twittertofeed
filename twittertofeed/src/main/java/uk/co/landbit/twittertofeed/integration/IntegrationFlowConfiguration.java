@@ -13,10 +13,7 @@ import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.NullChannel;
 import org.springframework.integration.config.EnableIntegration;
-import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.handler.advice.RequestHandlerRetryAdvice;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.retry.RetryPolicy;
 import org.springframework.retry.annotation.EnableRetry;
@@ -26,7 +23,6 @@ import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import uk.co.landbit.twittertofeed.config.ApplicationConfiguration;
 import uk.co.landbit.twittertofeed.integration.endpoint.TweetService;
 
 @Configuration
@@ -37,8 +33,6 @@ import uk.co.landbit.twittertofeed.integration.endpoint.TweetService;
 @EnableTransactionManagement
 public class IntegrationFlowConfiguration {
 	
-	@Autowired
-	private ApplicationConfiguration cfg;
 	
 	@Autowired
 	private TweetService tweetService;

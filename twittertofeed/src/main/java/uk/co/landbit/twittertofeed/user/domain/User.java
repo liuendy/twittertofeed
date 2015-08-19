@@ -93,16 +93,47 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User(String email, String password, String firstName, String lastName) {
-	super();
-	this.email = email;
-	this.password = password;
-	this.firstName = firstName;
-	this.lastName = lastName;
+    public static Builder getBuilder() {
+        return new Builder();
     }
+    
+    public static class Builder {
 
-    public User() {
-	// TODO Auto-generated constructor stub
+        private User user;
+
+        public Builder() {
+            user = new User();
+            user.role = Role.ROLE_USER;
+        }
+
+        public Builder email(String email) {
+            user.email = email;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            user.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            user.lastName = lastName;
+            return this;
+        }
+
+        public Builder password(String password) {
+            user.password = password;
+            return this;
+        }
+
+        public Builder signInProvider(SignInProvider signInProvider) {
+            user.signInProvider = signInProvider;
+            return this;
+        }
+
+        public User build() {
+            return user;
+        }
     }
 
 }

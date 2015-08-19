@@ -14,44 +14,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
-import io.undertow.security.idm.Account;
 import uk.co.landbit.twittertofeed.security.SignInUtils;
 import uk.co.landbit.twittertofeed.user.domain.SignInProvider;
 import uk.co.landbit.twittertofeed.user.domain.User;
-import uk.co.landbit.twittertofeed.user.repository.UserRepository;
+import uk.co.landbit.twittertofeed.user.service.UserService;
 
 @Controller
 public class UserSignUpController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserSignUpController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserSignUpController.class);
 
     protected static final String VIEW_NAME_REGISTRATION_PAGE = "user/signup";
     protected static final String MODEL_NAME_REGISTRATION_DTO = "signupForm";
 
-    @Autowired
-    private UserRepository accountRepository;
-    private ProviderSignInUtils providerSignInUtils;
+    
+    private final UserService accountService;
+    private final ProviderSignInUtils providerSignInUtils;
 
     @Autowired
-    public UserSignUpController(UserRepository accountRepository) {
-	this.accountRepository = accountRepository;
+    public UserSignUpController(UserService accountService) {
+	this.accountService = accountService;
 	this.providerSignInUtils = new ProviderSignInUtils();
     }
 
-    // @RequestMapping(value = "/user/signup", method = RequestMethod.GET)
-    // public String showRegistrationForm(WebRequest request, Model model) {
-    // LOGGER.debug("Rendering registration page.");
-    //
-    // // ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
-    // // Connection<?> connection =
-    // // providerSignInUtils.getConnectionFromSession(request);
-    //
-    // SignupForm signUpForm = new SignupForm();
-    // model.addAttribute(MODEL_NAME_REGISTRATION_DTO, signUpForm);
-    //
-    // return VIEW_NAME_REGISTRATION_PAGE;
-    // }
-
+   
     @RequestMapping(value = "/user/signup", method = RequestMethod.GET)
     public SignupForm signupForm(WebRequest request) {
 	Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
@@ -65,20 +51,30 @@ public class UserSignUpController {
     }
     
     
-    @RequestMapping(value="/user/signup", method=RequestMethod.POST)
-	public String signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request) {
-		if (formBinding.hasErrors()) {
-			return null;
-		}
-		User account = createAccount(form, formBinding);
-		if (account != null) {
-			SignInUtils.signin(account);
-			providerSignInUtils.doPostSignUp(account.getEmail(), request);
-			return "redirect:/";
-		}
-		return null;
+    @RequestMapping(value = "/user/signup", method = RequestMethod.POST)
+    public String signup(@Valid SignupForm form, BindingResult formBinding, WebRequest request) {
+	if (formBinding.hasErrors()) {
+	    LOG.debug("Validation errors found. Rendering form view.");
+	    return null;
 	}
+	User account = createUserAccount(form, formBinding);
 
+	LOG.debug("No validation errors found. Continuing registration process.");
+
+	if (account != null) {
+	    SignInUtils.signin(account);
+	    LOG.debug("User {} has been signed in", account);
+
+	    // If the user is signing in by using a social provider, this method
+	    // call stores
+	    // the connection to the UserConnection table. Otherwise, this
+	    // method does not
+	    // do anything.
+	    providerSignInUtils.doPostSignUp(account.getEmail(), request);
+	    return "redirect:/";
+	}
+	return null;
+    }
     
     // internal helpers
 
@@ -95,16 +91,33 @@ public class UserSignUpController {
 	return accountForm;
     }
 
-    private User createAccount(SignupForm form, BindingResult formBinding) {
-	//try {
-	    // TODO proper impl, add ROLE_USER
-	    User account = new User(form.getEmail(), form.getPassword(), form.getFirstName(),
-		    form.getLastName());
-	    accountRepository.save(account);
-	    return account;
-//	} catch (UsernameAlreadyInUseException e) {
-//	    formBinding.rejectValue("username", "user.duplicateUsername", "already in use");
-//	    return null;
+//    private User createAccount(SignupForm form, BindingResult formBinding) {
+//	//try {
+//	    // TODO proper impl, add ROLE_USER
+//	    User account = new User(form.getEmail(), form.getPassword(), form.getFirstName(),
+//		    form.getLastName());
+//	    
+//	    accountService.signup(form);
+//	    return account;
+////	} catch (UsernameAlreadyInUseException e) {
+////	    formBinding.rejectValue("username", "user.duplicateUsername", "already in use");
+////	    return null;
+////	}
+//    }
+    
+    private User createUserAccount(SignupForm form, BindingResult result) {
+	LOG.debug("Creating user account with information: {}", form);
+	User account = null;
+
+//	try {
+	    account = accountService.signup(form);
+//	} catch (DuplicateEmailException ex) {
+//	    LOGGER.debug("An email address: {} exists.", userAccountData.getEmail());
+//	    addFieldError(MODEL_NAME_REGISTRATION_DTO, RegistrationForm.FIELD_NAME_EMAIL, userAccountData.getEmail(),
+//		    ERROR_CODE_EMAIL_EXIST, result);
 //	}
+
+	return account;
     }
+
 }

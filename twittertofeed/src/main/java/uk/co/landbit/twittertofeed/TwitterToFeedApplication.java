@@ -20,7 +20,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.social.config.annotation.EnableSocial;
+import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.xnio.Options;
@@ -105,7 +108,16 @@ public class TwitterToFeedApplication {
 
 		return ds;
 	}
-
+	
+	
+// TODO USE Liquibase for table init
+//	private DatabasePopulator databasePopulator() {
+//		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+//		populator.addScript(new ClassPathResource("JdbcUsersConnectionRepository.sql", JdbcUsersConnectionRepository.class));
+//		//populator.addScript(new ClassPathResource("Account.sql", JdbcAccountRepository.class));
+//		//populator.addScript(new ClassPathResource("data.sql", JdbcAccountRepository.class));
+//		return populator;
+//	}
 	
 	private static void logActiveProfiles(ApplicationContext ctx) {
 		StringBuilder sb = new StringBuilder("\n    Active profiles:\n");

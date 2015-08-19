@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:social="http://spring.io/springsocial"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorator="layout">
-	<head>
-		<title>TwitterToFeed home page</title>
+	xmlns:social="http://spring.io/springsocial"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>TwitterToFeed home page</title>
 <link
 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
 	th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
@@ -15,26 +15,26 @@
 	rel="stylesheet" media="screen" />
 <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
 	th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
-		<link rel="stylesheet" th:href="@{/messages/messages.css}" type="text/css" media="screen"></link>
-	</head>
-	<body>
+
+</head>
+<body>
+	<div layout:fragment="content">
+
 		<div id="header">
-			<h1><a th:href="@{/}">Spring Social Showcase</a></h1>
+			<h1>
+				<a th:href="@{/}">Twitter to Feed</a>
+			</h1>
 		</div>
-		
-		<div id="leftNav">
-			Left nav menu
+
+		<div class="page-header">
+			<!-- <h1 th:text="#{label.homepage.title}+' ' +${#authentication.principal.firstName}+' '+${#authentication.principal.lastName}"></h1> -->
 		</div>
-		
-		<div id="content" layout:fragment="content">
-			<p>Welcome, <span th:text="${user.firstName}">first-name</span>!</p>
-			
-			<form method="POST" th:action="@{/signout}">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-				<button>Sign Out</button>
-			</form>
-		</div>		
-	</body>
+
+		<form method="POST" th:action="@{/signout}">
+			<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+			<button>Sign Out</button>
+		</form>
+	</div>
+</body>
 </html>
 
-    

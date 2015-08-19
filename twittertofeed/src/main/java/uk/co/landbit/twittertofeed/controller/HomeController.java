@@ -18,4 +18,6 @@ public class HomeController {
 	LOGGER.debug("Rendering homepage.");
 	return VIEW_NAME_HOMEPAGE;
     }
+    
+    
 }
