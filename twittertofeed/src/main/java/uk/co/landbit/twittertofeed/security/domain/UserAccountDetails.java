@@ -1,4 +1,4 @@
-package uk.co.landbit.twittertofeed.security;
+package uk.co.landbit.twittertofeed.security.domain;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,7 +12,7 @@ import uk.co.landbit.twittertofeed.user.domain.Role;
 import uk.co.landbit.twittertofeed.user.domain.SignInProvider;
 
 // TODO review builder
-public class SocialUserDetails extends SocialUser {
+public class UserAccountDetails extends SocialUser {
 
     private Long id;
 
@@ -24,7 +24,7 @@ public class SocialUserDetails extends SocialUser {
 
     private SignInProvider signInProvider;
 
-    public SocialUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserAccountDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 	super(username, password, authorities);
     }
 
@@ -113,8 +113,8 @@ public class SocialUserDetails extends SocialUser {
 	    return this;
 	}
 
-	public SocialUserDetails build() {
-	    SocialUserDetails user = new SocialUserDetails(username, password, authorities);
+	public UserAccountDetails build() {
+	    UserAccountDetails user = new UserAccountDetails(username, password, authorities);
 
 	    user.id = id;
 	    user.firstName = firstName;

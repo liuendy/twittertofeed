@@ -14,8 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
 
-import uk.co.landbit.twittertofeed.security.SocialUserDetailsServiceImpl;
-import uk.co.landbit.twittertofeed.security.UserDetailsServiceImpl;
+import uk.co.landbit.twittertofeed.security.service.SocialUserDetailsServiceImpl;
+import uk.co.landbit.twittertofeed.security.service.UserDetailsServiceImpl;
 import uk.co.landbit.twittertofeed.user.repository.UserRepository;
 
 @Configuration
