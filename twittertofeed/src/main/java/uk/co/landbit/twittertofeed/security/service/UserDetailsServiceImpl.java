@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import uk.co.landbit.twittertofeed.security.domain.UserAccountDetails;
+import uk.co.landbit.twittertofeed.security.domain.UserDetailsImpl;
 import uk.co.landbit.twittertofeed.user.domain.User;
 import uk.co.landbit.twittertofeed.user.repository.UserRepository;
 
@@ -40,8 +40,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	LOGGER.debug("Found user: {}", user);
 
-	UserAccountDetails principal = 
-		UserAccountDetails.getBuilder()
+	UserDetailsImpl principal = 
+		UserDetailsImpl.getBuilder()
                       	 .firstName(user.getFirstName())
                       	 .id(user.getId())
                        	 .lastName(user.getLastName())

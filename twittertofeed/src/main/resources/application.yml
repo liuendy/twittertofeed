@@ -22,7 +22,7 @@ spring:
         generate-ddl: true
         hibernate:
             ddl-auto: create-drop
-            naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+            #naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
         properties:
             hibernate.dialect: 
             hibernate.hbm2ddl.import_files:

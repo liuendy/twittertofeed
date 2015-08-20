@@ -26,23 +26,8 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
     }
-    
-   
 
-//    @Override
-//    public User signup(SignupForm userform) {
-//	LOG.debug("Saving userto DB, email {}", userform.getEmail());
-//	User user = new User();
-//	user.setEmail(userform.getEmail());
-//	user.setFirstName(userform.getFirstName());
-//	user.setLastName(userform.getLastName());
-//	user.setRole(userform.getRole());
-//	user.setPassword(new BCryptPasswordEncoder().encode(userform.getPassword()));
-//	user.setRole(userform.getRole());
-//	return userRepository.save(user);
-//    }
-    
-    
+    // TODO improve
     @Transactional
     @Override
     public User signup(SignupForm userform) { //throws DuplicateEmailException {
@@ -92,10 +77,10 @@ public class UserServiceImpl implements UserService {
     private String encodePassword(SignupForm form) {
         String encodedPassword = null;
 
-        if (!form.isSocialSignIn()) {
+       // if (!form.isSocialSignIn()) {
             LOG.debug("Registration is normal registration. Encoding password.");
             encodedPassword = passwordEncoder.encode(form.getPassword());
-        }
+        //}
 
         return encodedPassword;
     }

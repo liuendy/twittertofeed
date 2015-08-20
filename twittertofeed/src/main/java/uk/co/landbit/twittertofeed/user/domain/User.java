@@ -34,7 +34,7 @@ public class User {
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "signInProvider", length = 32)
+    @Column(name = "sign_in_provider", length = 32)
     private SignInProvider signInProvider;
 
     public Long getId() {

@@ -12,8 +12,14 @@ import uk.co.landbit.twittertofeed.user.domain.Role;
 import uk.co.landbit.twittertofeed.user.domain.SignInProvider;
 
 // TODO review builder
-public class UserAccountDetails extends SocialUser {
+public class UserDetailsImpl extends SocialUser {
 
+    private static final long serialVersionUID = 1L;
+
+//TODO
+//    private User user;
+//    private List<GrantedAuthority> roles;
+    
     private Long id;
 
     private String firstName;
@@ -24,7 +30,7 @@ public class UserAccountDetails extends SocialUser {
 
     private SignInProvider signInProvider;
 
-    public UserAccountDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 	super(username, password, authorities);
     }
 
@@ -113,8 +119,8 @@ public class UserAccountDetails extends SocialUser {
 	    return this;
 	}
 
-	public UserAccountDetails build() {
-	    UserAccountDetails user = new UserAccountDetails(username, password, authorities);
+	public UserDetailsImpl build() {
+	    UserDetailsImpl user = new UserDetailsImpl(username, password, authorities);
 
 	    user.id = id;
 	    user.firstName = firstName;
