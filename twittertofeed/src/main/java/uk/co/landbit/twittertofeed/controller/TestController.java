@@ -10,7 +10,6 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
-import org.neo4j.cypher.internal.compiler.v2_1.ast.rewriters.isolateAggregation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +48,6 @@ public class TestController {
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
     
     private static final DateFormat DATE_PARSER = new SimpleDateFormat("yyyy-MM-dd");
-    
-    
 
     private UsersConnectionRepository usersConnectionRepository;
 

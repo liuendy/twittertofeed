@@ -4,11 +4,23 @@ logging:
         uk.co.landbit: DEBUG
         org.springframework: INFO
 
+twittertofeed:
+    tweetindexer:
+        scheduler: 180000
 ---
 
 spring:
     
     profiles: scratch
+    redis:
+        host: 192.168.1.72
+        port: 6379
+        password: 
+        pool:
+            max-wait: -1
+            max-active: -1
+            max-idle: -1
+            min-idle: 16
     datasource:
         driver-class-name: org.hsqldb.jdbc.JDBCDriver
         url: jdbc:hsqldb:mem:scratchdb
@@ -37,6 +49,15 @@ spring:
         twitter:
             app-id: myappid
             app-secret: myappsecret
+    redis:
+        host: 192.168.1.72
+        port: 6379
+        password: 
+        pool:
+            max-wait: -1
+            max-active: -1
+            max-idle: -1
+            min-idle: 16
     datasource:
         driver-class-name: org.mariadb.jdbc.MySQLDataSource
         url: jdbc:mysql://localhost:3306/twittertofeed
