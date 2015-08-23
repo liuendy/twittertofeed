@@ -36,7 +36,7 @@ public class UserSignUpController {
     public UserSignUpController(UserService accountService, ConnectionFactoryLocator connectionFactoryLocator,
 	    UsersConnectionRepository connectionRepository) {
 	this.accountService = accountService;
-	this.providerSignInUtils = new ProviderSignInUtils();
+	this.providerSignInUtils = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
     }
 
     @RequestMapping(value = "/user/signup", method = RequestMethod.GET)

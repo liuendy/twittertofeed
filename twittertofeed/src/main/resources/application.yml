@@ -6,7 +6,7 @@ logging:
 
 twittertofeed:
     tweetindexer:
-        scheduler: 180000
+        scheduler: 240000
 ---
 
 spring:

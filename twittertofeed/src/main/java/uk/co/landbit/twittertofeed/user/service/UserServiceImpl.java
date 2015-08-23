@@ -77,10 +77,10 @@ public class UserServiceImpl implements UserService {
     private String encodePassword(SignupForm form) {
         String encodedPassword = null;
 
-       // if (!form.isSocialSignIn()) {
+        if (!form.isSocialSignIn()) {
             LOG.debug("Registration is normal registration. Encoding password.");
             encodedPassword = passwordEncoder.encode(form.getPassword());
-        //}
+        }
 
         return encodedPassword;
     }

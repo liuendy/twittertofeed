@@ -1,11 +1,14 @@
 package uk.co.landbit.twittertofeed.scheduler;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import uk.co.landbit.twittertofeed.feed.domain.TweetEntry;
 import uk.co.landbit.twittertofeed.feed.service.FeedService;
 
 @Component
@@ -25,10 +28,10 @@ public class TweetIndexer {
     public void indexTweets() {
 
 	LOG.debug("Indexing tweets");
-	
-	feedService.indexTweets();
-	
-	LOG.debug("Indexing tweets done...");
+
+	List<TweetEntry> tweets = feedService.indexTweets();
+
+	LOG.debug("Indexing tweets done... Nb of new tweets: {}", tweets.size());
 
     }
 }
