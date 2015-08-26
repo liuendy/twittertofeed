@@ -23,6 +23,7 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
+import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.ReconnectFilter;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
@@ -33,6 +34,24 @@ public class SocialConfig extends SocialConfigurerAdapter { //implements SocialC
 
     @Autowired
     private DataSource dataSource;
+    
+//    //this one works!
+//    @Bean
+//    public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator,  ConnectionRepository
+//	    usersConnectionRepository) {
+//        ConnectController controller = new ConnectController(	 connectionFactoryLocator,    	    usersConnectionRepository);
+//        controller.setApplicationUrl("http://twittertofeed.landbit.co.uk");
+//        return controller;
+//    }
+    
+//    @Bean
+//    public ProviderSignInController providerSignInController(ConnectionFactoryLocator connectionFactoryLocator,  UsersConnectionRepository
+//	    usersConnectionRepository) {
+//        ProviderSignInController controller = new ProviderSignInController(connectionFactoryLocator, 
+//            usersConnectionRepository, new SimpleSignInAdapter());
+//        controller.setApplicationUrl("http://twittertofeed.landbit.co.uk");
+//        return controller;
+//    }
 
     // @Bean
     // public ConnectController connectController(ConnectionFactoryLocator

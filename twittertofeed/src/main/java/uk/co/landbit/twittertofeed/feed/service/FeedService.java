@@ -10,5 +10,5 @@ public interface FeedService {
     
     List<TweetEntry> getTweets(String uid);
     
-    List<TweetEntry> getTweets(String uid, Integer begin, Integer end);
+    List<TweetEntry> getTweets(String uid, Integer page);
 }

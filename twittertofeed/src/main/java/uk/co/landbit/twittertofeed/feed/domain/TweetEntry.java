@@ -11,6 +11,7 @@ public class TweetEntry {
     private String link;
     private String imgUrl;
     private String mimeType;
+    private String author;
 
     public String getId() {
 	return id;
@@ -67,5 +68,14 @@ public class TweetEntry {
     public void setMimeType(String mimeType) {
 	this.mimeType = mimeType;
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    
 
 }

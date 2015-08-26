@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import uk.co.landbit.twittertofeed.feed.domain.Channel;
@@ -25,7 +24,7 @@ import uk.co.landbit.twittertofeed.feed.domain.RSSFeed;
 import uk.co.landbit.twittertofeed.feed.domain.TweetEntry;
 import uk.co.landbit.twittertofeed.feed.service.FeedService;
 
-// TODO optimization : Stream and Non blocking endpoint
+// TODO optimization : Stream and Non blocking endpoint, code refactoring
 /**
  * Main controller, API
  * 
@@ -48,11 +47,10 @@ public class FeedController {
     }
     
     // TODO better exception handling, code refactoring
-    @RequestMapping(value = "/{uuid}/rss",
+    @RequestMapping(value = "/{uuid}/page/{page}",
             method = {RequestMethod.GET},
             produces = {  MediaType.APPLICATION_XML_VALUE + UTF8 })
-    public ResponseEntity<RSSFeed> writeRssFeed(@PathVariable final String uuid,
-	    @RequestParam(value="nb", required=false, defaultValue="299") final Integer nb) {
+    public ResponseEntity<RSSFeed> writeRssFeed(@PathVariable final String uuid, @PathVariable final Integer page) {
 
 	RSSFeed rssFeed = new RSSFeed();
 
@@ -60,13 +58,13 @@ public class FeedController {
 	SimpleDateFormat sdf = new SimpleDateFormat("E, d MMM yyyy HH:mm:ss Z", Locale.US);
 
 	Channel rssChannel = new Channel();
-	rssChannel.setTitle("Twitter to Feed");
+	rssChannel.setTitle("Twitter to Feed, page " + page);
 	rssChannel.setDescription("Your personalised twitter timeline as a syndication feed");
 	rssChannel.setLink("http://landbit.co.uk/");
 	rssChannel.setLastBuildDate(sdf.format(new Date()));
 
 	// get cached tweets
-	List<TweetEntry> tweets = feedService.getTweets(uuid, RANGE_BEGIN, nb-1);
+	List<TweetEntry> tweets = feedService.getTweets(uuid, page);
 
 	List<Item> items = new ArrayList<>();
 
@@ -74,6 +72,7 @@ public class FeedController {
 
 	    Item i = new Item();
 	    i.setTitle(t.getTitle());
+	    i.setAuthor(t.getAuthor());
 	    i.setLink(t.getLink());
 	    i.setGuid(t.getLink());
 	    i.setPubDate(sdf.format(t.getCreatedAt()));
@@ -95,7 +94,7 @@ public class FeedController {
 	    }
 	}
 
-	LOG.debug("RSS entries : {}", items.size());
+	LOG.debug("RSS entries : {} , page {}", items.size(), page);
 
 	rssChannel.setItems(items);
 	rssFeed.setChannel(rssChannel);

@@ -30,8 +30,9 @@ public class TweetIndexer {
 	LOG.debug("Indexing tweets");
 
 	List<TweetEntry> tweets = feedService.indexTweets();
-
 	LOG.debug("Indexing tweets done... Nb of new tweets: {}", tweets.size());
 
+	//TODO evict cache
+	
     }
 }

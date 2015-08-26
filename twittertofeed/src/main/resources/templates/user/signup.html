@@ -1,74 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:social="http://spring.io/springsocial"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-	<title>TwitterToFeed sign up page</title>
-	<link
-		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
-		th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
-		rel="stylesheet" media="screen" />
-	<link
-		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js"
-		th:href="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"
-		rel="stylesheet" media="screen" />
-	<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
-		th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
-	
+<title>TwitterToFeed sign up page</title>
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js"
+	th:href="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"
+	rel="stylesheet" media="screen" />
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+
 </head>
 
 <body>
 
 
-	<div id="content" layout:fragment="content">
-<div class="panel panel-default" sec:authorize="isAnonymous()">
-			<div class="panel-body">
-<form id="signup" th:action="@{/user/signup}" method="post" th:object="${signupForm}">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-				
-				<input type="hidden" th:type="hidden" th:field="*{signInProvider}" th:if="${signupForm.signInProvider} != null" />
-				
-				<div class="formInfo">
-					<div class="error" th:if="${#fields.hasErrors('*')}">Unable to sign up. Please fix the errors below and resubmit.</div>
-				</div>
-				
-				 <div class="form-group"> 
-          		 <div class="col-lg-offset-2 col-lg-10">
-					<label for="firstName">First Name <span th:if="${#fields.hasErrors('firstName')}" class="error" th:text="${#fields.errors('firstName')[0]}">Error</span></label>
-					<input type="text" th:field="*{firstName}" />
-				</div>
-				</div>	
-				 <div class="form-group"> 
-          		 <div class="col-lg-offset-2 col-lg-10">
-					<label for="lastName">Last Name <span th:if="${#fields.hasErrors('lastName')}" class="error" th:text="${#fields.errors('lastName')[0]}">Error</span></label>
-					<input type="text" th:field="*{lastName}" />
+<div class="container-fluid">
+		<!-- ENTETE PRINCIPALE -->
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<p>
+				<h1>
+					TWITTER TO FEED <br/>
+					<small>YOUR TWITTER TIMELINE AS A PERSONALISED FEED</small>
+				</h1>
+				</p>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+		
+		<!-- LIGNE DE DEMARQUATION -->
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10"></div>
+			<div class="col-md-1"></div>
+		</div>
+
+		<div class="row">	
+			<div class="col-md-1"></div>
+			
+			<!-- COLONNE GAUCHE PRINCIPALE-->
+			<div class="col-md-3">
+				<div class="well well-sm">
+					<div class="row">
+						<div class="col-md-12"><p class="text-center"><strong>SIGN UP</strong></p></div>
 					</div>
-				</div>	
-					 <div class="form-group"> 
-          		 <div class="col-lg-offset-2 col-lg-10">
-					<label for="email">email <span th:if="${#fields.hasErrors('email')}" class="error" th:text="${#fields.errors('email')[0]}">Error</span></label>
-					<input type="text" th:field="*{email}" />
+					<div class="row">
+					<div class="col-md-4"></div>
+						<div class="col-md-4"></div>
+					<div class="col-md-4"></div>
 					</div>
-				</div>	
-				
-				
-				<div class="row" th:if="${signupForm.signInProvider} == null">
-							<div id="form-group-password" class="form-group col-lg-4">
-								<label class="control-label" for="user-password" >Password:</label>
-								<input	th:field="*{password}" th:type="password" class="form-control" />
-								<p th:if="${#fields.hasErrors('password')}"
-									th:id="error-password" class="help-block" th:errors="*{password}"></p>
-							</div>
+					<br/>
+					<div class="row">
+						<div class="col-md-12"><p class="text-center"></p></div>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col-md-12">
+								<form id="signup" th:action="@{/user/signup}" method="post"
+								th:object="${signupForm}">
+								<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+								 <input	type="hidden" th:type="hidden" th:field="*{signInProvider}"	th:if="${signupForm.signInProvider} != null" />
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1"> <span
+										class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									</span> <input th:field="*{firstName}" name="firstName" type="text" class="form-control"
+										placeholder="First Name" aria-describedby="basic-addon1"/>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1"> <span
+										class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									</span> <input th:field="*{lastName}" name="lastName" type="password" class="form-control"
+										placeholder="Last Name" aria-describedby="basic-addon1"/>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1"> <span
+										class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+									</span> <input th:field="*{email}" name="email" type="text" class="form-control"
+										placeholder="email address" aria-describedby="basic-addon1"/>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1"> <span
+										class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+									</span> <input th:field="*{password}" th:type="password" name="password" type="password" class="form-control"
+										placeholder="password" aria-describedby="basic-addon1"/>
+								</div>
+								<div class="checkbox">
+									<label><input type="checkbox"/> Remember me</label>
+								</div>
+								<button type="submit" class="btn btn-default">Sign up</button>
+							</form>
 						</div>
-				
-				
- 			<div class="form-group"> 
-          		 <div class="col-lg-offset-2 col-lg-10">
-				<p><button type="submit">Sign Up</button></p>
+						<br/>
+					</div>
 				</div>
-				</div>	
-			</form>
-</div>
-</div>
-</div>
+			</div>
+
+
+
+			<!-- COLONNE CENTRALE PRINCIPALE-->
+			<div class="col-md-3">
+			<img th:src="@{/static/img/iphone.jpg}" class="img-responsive" alt="" width="190" height="133"/></div>
+			
+			
+			<!-- COLONNE DROITE PRINCIPALE-->
+			<div class="col-md-4">Welcome, with twitter to feed you'll be able to convert you twitter timeline into a syndication feed.</div>
+		</div>
+		<!-- PIED DE PAGE-->
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-center">POWERED BY LANDBIT LIMITED</p>
+			</div>
+
+		</div>
+
+
+
+	</div>
+
+
+
+
+
+
 </body>
 </html>

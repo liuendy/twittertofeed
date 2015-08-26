@@ -58,7 +58,6 @@ public class TwitterToFeedApplication {
 		logBeans(ctx);
 	}
 
-
 	@Bean
 	EhCacheCacheManager ehCacheCacheManager() {
 		return new EhCacheCacheManager(ehCacheManagerFactoryBean().getObject());
@@ -102,7 +101,7 @@ public class TwitterToFeedApplication {
 		ds.setPassword(password);
 		ds.setConnectionTestQuery(validationQuery);
 
-		return ds;
+		return (DataSource) ds;
 	}
 	
 //	@Bean

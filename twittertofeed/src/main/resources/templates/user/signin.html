@@ -1,78 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:social="http://spring.io/springsocial"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-	<title>TwitterToFeed sign in page</title>
-	<link
-		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
-		th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
-		rel="stylesheet" media="screen" />
-	<link
-		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js"
-		th:href="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"
-		rel="stylesheet" media="screen" />
-	<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
-		th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
-	
-</head>
-	<body>
-		<div id="header">
-			<h1><a th:href="@{/}">TwitterToFeed sign in page</a></h1>
-		</div>
-		
-		<div id="leftNav">
-			Left nav menu
-		</div>
-		
-		<div id="content" layout:fragment="content">
-			<form id="signin" th:action="@{/signin/authenticate}" method="post">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
-				<div class="formInfo">
-			  		<div class="error" th:if="${param.error eq 'bad_credentials'}">
-			  			Your sign in information was incorrect.
-			  			Please try again or <a th:href="@{/signup}">sign up</a>.
-			  		</div>
-			  		<div class="error" th:if="${param.error eq 'multiple_users'}">
-			  			Multiple local accounts are connected to the provider account.
-			  			Try again with a different provider or with your username and password.
-			  		</div>
-				</div>
-				
-				    <div class="row">
-                    <div id="form-group-email" class="form-group col-lg-4">
-					  <label class="control-label" for="user-email">Email:</label>
-                        <input id="user-email" name="username" type="text" class="form-control"/>
-                    </div>
-                </div>
-                
-                
-                 <div class="row">
-                    <div id="form-group-password" class="form-group col-lg-4">
-                        <label class="control-label" for="user-password" >Password:</label>
-                        <input id="user-password" name="password" type="password" class="form-control"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-4">
-                        <button type="submit" class="btn btn-default">Sign in</button>
-                    </div>
-                </div>
-            </form>
-            <div class="row">
-                <div class="form-group col-lg-4">
-                    <a href="/signup" th:href="@{/signup}">Create user account</a>
-                </div>
-            </div>
-				
+<title>TwitterToFeed sign in page</title>
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js"
+	th:href="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"
+	rel="stylesheet" media="screen" />
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
 
-			<!-- TWITTER SIGNIN -->
-			<div class="row">
-			 <div class="form-group col-lg-4">
-				<p><a th:href="@{/auth/twitter}" >Sign in with your twitter account</a></p>
+</head>
+<body>
+	
+
+	<div class="container-fluid">
+		<!-- ENTETE PRINCIPALE -->
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<p>
+				<h1>
+					TWITTER TO FEED <br/> <small>YOUR TWITTER TIMELINE AS A
+						PERSONALISED FEED</small>
+				</h1>
+				</p>
+			</div>
+			<div class="col-md-1"></div>
 		</div>
-		
-      		</div>
-   
-        </div>
-	</body>
+		<!-- LIGNE DE DEMARQUATION -->
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10"></div>
+			<div class="col-md-1"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-1"></div>
+
+			<!-- COLONNE GAUCHE PRINCIPALE-->
+			<div class="col-md-3">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="well well-sm">
+							<a href="/signup" th:href="@{/signup}" class="alert-link text-center"><h4><strong>CREATE AN ACCOUNT</strong>
+								</h4></a>
+						</div>
+					</div>
+				</div>
+				<div class="well well-sm">
+					<div class="row">
+						<div class="col-md-12">
+							<p class="text-center">
+								<strong>SIGN IN with</strong>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4"></div>
+						<div class="col-md-4">
+							<h3>
+								<a th:href="@{/auth/twitter}"><span class="label label-primary">Twitter</span></a>
+							</h3>
+						</div>
+						<div class="col-md-4"></div>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col-md-12">
+							<p class="text-center">OR</p>
+						</div>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col-md-12">
+								<form id="signin" th:action="@{/signin/authenticate}" method="post">
+								<input type="hidden" name="_csrf" th:value="${_csrf.token}"></input>
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1"> <span
+										class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									</span> <input name="username" type="text" class="form-control"
+										placeholder="email address" aria-describedby="basic-addon1"/>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1"> <span
+										class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+									</span> <input name="password" type="password" class="form-control"
+										placeholder="password" aria-describedby="basic-addon1"/>
+								</div>
+								<div class="checkbox">
+									<label><input type="checkbox"/> Remember me</label>
+								</div>
+								 <button type="submit" class="btn btn-default">Sign in</button>
+							</form>
+						</div>
+						<br/>
+					</div>
+					<div class="row">
+						<div class="col-md-12">Forgot password ?</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<!-- COLONNE CENTRALE PRINCIPALE-->
+			<div class="col-md-3">
+				<img th:src="@{/static/img/iphone.jpg}"  class="img-responsive" alt=""	width="190" height="133"/>
+			</div>
+
+
+			<!-- COLONNE DROITE PRINCIPALE-->
+			<div class="col-md-4">Welcome, with twitter to feed you'll be able to convert you twitter timeline into a syndication feed.</div>
+		</div>
+		<!-- PIED DE PAGE-->
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-center">POWERED BY LANDBIT LIMITED</p>
+			</div>
+
+		</div>
+
+
+
+
+
+
+	</div>
+
+
+</body>
 </html>

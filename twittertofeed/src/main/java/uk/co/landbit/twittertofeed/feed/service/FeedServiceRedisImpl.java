@@ -27,7 +27,9 @@ import uk.co.landbit.twittertofeed.user.repository.UserRepository;
 @Service
 public class FeedServiceRedisImpl implements FeedService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FeedServiceRedisImpl.class);
+    private final static Logger LOG = LoggerFactory.getLogger(FeedServiceRedisImpl.class);
+    private final static Integer CHUNK = 30;
+    private final static Integer MAX = 300;
 
     private final TweetRedisRepository feedRepository;
     private final UsersConnectionRepository usersConnectionRepository;
@@ -63,14 +65,18 @@ public class FeedServiceRedisImpl implements FeedService {
 		    .createConnectionRepository(u.getEmail());
 	    Connection<Twitter> twitterCon = connectionRepository.getPrimaryConnection(Twitter.class);
 	    Twitter twitter = twitterCon.getApi();
-	    LOG.debug("Indexing tweets of user {}, getScreenName : {}", u.getId(), twitter.userOperations().getUserProfile().getScreenName());
+	    Long uid = u.getId();
+	    LOG.debug("Indexing tweets of user {}, getScreenName : {}", uid, twitter.userOperations().getUserProfile().getScreenName());
 
 	    // TODO be nice with twitter api and use sinceid (put sinceid in redis cache)
 	    List<Tweet> tweets = twitter.timelineOperations().getHomeTimeline(50);
+	    LOG.debug("Received {} from twitter API", tweets.size());
 
-	    // save a list of tweet ids belonging to an user
-	    List<String> tweetids = new ArrayList<>();
-
+	    // get index of where we stopped during previous tweet index
+	    Integer page = 0;
+	    Integer lastIndex = feedRepository.getLastIndex(uid);
+	    LOG.debug("LastIndex {}, User {}", lastIndex, uid);
+	    
 	    if (tweets != null && tweets.size() > 0) {
 		for (Tweet tweet : tweets) {
 		    // extract urls
@@ -89,12 +95,15 @@ public class FeedServiceRedisImpl implements FeedService {
 			    te = new TweetEntry();
 			    te.setId(String.valueOf(tweet.getId()));
 			    te.setCreatedAt(tweet.getCreatedAt());
-			    te.setTitle(tweet.getText());
+			    te.setTitle(tweet.getUser().getScreenName() + " - " + tweet.getText().replaceAll("https?://\\S+\\s?", ""));
 			    te.setLink(urlEntity.getExpandedUrl());
-
+			    te.setAuthor(tweet.getUser().getName());
+			   
 			    // save first image if any
 			    if (tweet.getEntities().hasMedia()) {
 				te.setImgUrl(tweet.getEntities().getMedia().get(0).getMediaUrl());
+			    }else{
+				te.setImgUrl(tweet.getUser().getProfileImageUrl());
 			    }
 
 			    // extract full article content
@@ -109,12 +118,24 @@ public class FeedServiceRedisImpl implements FeedService {
 			    // TODO get comments
 
 			    tweetEntries.add(te);
-			    tweetids.add(te.getId());
+			    
+			    lastIndex=incLastIndex(lastIndex);
+			    page = getPage(lastIndex);
 			    feedRepository.saveTweetEntry(te);
+			    feedRepository.addTweetId( uid, te.getId(),  page,  CHUNK);
+			    feedRepository.setLastIndex(uid, lastIndex);
+			} else {
+			    // already indexed, just add tweet id to user's list if not present already
+			    boolean isIdAlreadyExistsForUser = feedRepository.isIdExistsForUser(te.getId(), uid);
+			    if (!isIdAlreadyExistsForUser) {
+				lastIndex = incLastIndex(lastIndex);
+				page = getPage(lastIndex);
+				feedRepository.addTweetId(uid, te.getId(), page, CHUNK);
+				feedRepository.setLastIndex(uid, lastIndex);
+			    }
 			}
 		    }
 		}
-		feedRepository.addTweetIds(String.valueOf(u.getId()), tweetids);
 	    }
 	}
 
@@ -130,9 +151,9 @@ public class FeedServiceRedisImpl implements FeedService {
     }
 
     @Override
-    public List<TweetEntry> getTweets(String uid, Integer begin, Integer end) {
+    public List<TweetEntry> getTweets(String uid, Integer page) {
 	List<TweetEntry> tweetEntries = new ArrayList<>();
-	tweetEntries = feedRepository.findTweetEntriesByUid(uid, begin, end);
+	tweetEntries = feedRepository.findTweetEntriesByUidAndPage(uid, page, CHUNK);
 
 	return tweetEntries;
     }
@@ -140,7 +161,7 @@ public class FeedServiceRedisImpl implements FeedService {
     /**
      * TODO improve Dodgy mimetype extraction
      */
-    public String getContentType(String fileName) throws IOException {
+    private String getContentType(String fileName) throws IOException {
 	LOG.debug("Extract mime type, {}", fileName);
 
 	String extension = "";
@@ -152,5 +173,21 @@ public class FeedServiceRedisImpl implements FeedService {
 	    }
 	}
 	return fileExtensions.get(extension.toUpperCase());
+    }
+    
+    private Integer incLastIndex(Integer lastIndex) {
+	lastIndex = lastIndex + 1;
+	if (lastIndex > MAX) {
+	    lastIndex = 0;
+	}
+	return lastIndex;
+    }
+
+    /**
+     * Calculate the page for a new item we're doing some sort of sharding here
+     */
+    private Integer getPage(Integer lastIndex) {
+
+	return lastIndex / CHUNK;
     }
 }
