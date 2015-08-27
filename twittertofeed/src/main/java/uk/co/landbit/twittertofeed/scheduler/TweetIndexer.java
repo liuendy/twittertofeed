@@ -24,7 +24,7 @@ public class TweetIndexer {
 	this.feedService = feedService;
     }
 
-    @Scheduled(fixedDelayString = "${twittertofeed.tweetindexer.scheduler}")
+    //@Scheduled(fixedDelayString = "${twittertofeed.tweetindexer.scheduler}")
     public void indexTweets() {
 
 	LOG.debug("Indexing tweets");
